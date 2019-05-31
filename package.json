@@ -1,25 +1,22 @@
 {
-  "name": "pr-triage",
-  "version": "0.0.0-development",
-  "description": "GitHub App built with Probot that support pull request workflow",
+  "name": "auto-pr-labeler",
+  "version": "0.0.1",
+  "description": "GitHub App built with Probot that automatically labels pull requests on certain conditions",
   "main": "index.js",
   "scripts": {
     "start": "DEBUG=probot* probot run ./index.js",
     "start:dev": "nodemon --exec \"npm start\"",
     "commit": "git-cz",
-    "lint": "prettier --write {index,lib/**/*,test/pr-triage.test}.js",
+    "lint": "prettier --write {index,lib/**/*,test/auto-pr-labeler.test}.js",
     "test": "jest",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage",
     "coverage": "npm test  -- --coverage",
     "postcoverage": "codecov",
-    "precommit": "npm test && lint-staged",
-    "prepush": "npm test",
-    "commitmsg": "validate-commit-msg",
     "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sotayamashita/sidekick.git"
+    "url": "https://github.com/orhan/auto-pr-labeler-bot.git"
   },
   "keywords": [
     "probot",
@@ -30,7 +27,7 @@
     "label",
     "marge request"
   ],
-  "author": "Sam Yamashita",
+  "author": "Orhan Sönmez",
   "license": "Apache-2.0",
   "dependencies": {
     "debug": "^4.1.1",
@@ -60,8 +57,13 @@
   },
   "lint-staged": {
     "{index,lib/**/*}.js": [
-      "prettier --write {index,lib/**/*,test/pr-triage.test}.js",
+      "prettier --write {index,lib/**/*,test/auto-pr-labeler.test}.js",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
   }
 }

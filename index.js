@@ -1,6 +1,6 @@
-const debug = require("debug")("probot:pr-triage");
+const debug = require("debug")("probot:auto-pr-labeler");
 const Raven = require("raven");
-const PRTriage = require("./lib/pr-triage");
+const AutoLabeler = require("./lib/auto-pr-labeler");
 
 Raven.config(
   process.env.NODE_ENV === "production" &&
@@ -18,12 +18,13 @@ function probotPlugin(robot) {
     "pull_request_review.dismissed"
   ];
 
-  robot.on(events, triage);
+  robot.on(events, runAutoLabeler);
 }
 
-async function triage(context) {
-  const prTriage = forRepository(context);
+async function runAutoLabeler(context) {
+  const autoLabeler = forRepository(context);
   const pullRequest = getPullRequest(context);
+  const config = getConfig(context);
 
   Raven.context(() => {
     Raven.setContext({
@@ -33,17 +34,21 @@ async function triage(context) {
         number: pullRequest.number
       }
     });
-    prTriage.triage(pullRequest);
+    autoLabeler.runAutoLabeler(pullRequest, config);
   });
 }
 
 function forRepository(context) {
   const config = Object.assign({}, context.repo({ logger: debug }));
-  return new PRTriage(context.github, config);
+  return new AutoLabeler(context.github, config);
 }
 
 function getPullRequest(context) {
   return context.payload.pull_request || context.payload.review.pull_request;
+}
+
+async function getConfig(context) {
+  return await context.config('auto_pr_labeler.yml');
 }
 
 module.exports = probotPlugin;
