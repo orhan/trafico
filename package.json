@@ -5,14 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "DEBUG=probot* probot run ./index.js",
-    "start:dev": "nodemon --exec \"npm start\"",
-    "commit": "git-cz",
-    "lint": "prettier --write {index,lib/**/*,test/auto-pr-labeler.test}.js",
-    "test": "jest",
-    "test:watch": "jest --watch --notify --notifyMode=change --coverage",
-    "coverage": "npm test  -- --coverage",
-    "postcoverage": "codecov",
-    "semantic-release": "semantic-release"
+    "start:dev": "nodemon --exec \"npm start\""
   },
   "repository": {
     "type": "git",
