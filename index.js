@@ -24,18 +24,9 @@ function probotPlugin(robot) {
 async function runAutoLabeler(context) {
   const autoLabeler = forRepository(context);
   const pullRequest = getPullRequest(context);
-  const config = getConfig(context);
+  const config = await getConfig(context);
 
-  Raven.context(() => {
-    Raven.setContext({
-      extra: {
-        owner: context.repo()["owner"],
-        repo: context.repo()["repo"],
-        number: pullRequest.number
-      }
-    });
-    autoLabeler.runAutoLabeler(pullRequest, config);
-  });
+  autoLabeler.runAutoLabeler(context, pullRequest, config);
 }
 
 function forRepository(context) {
@@ -48,7 +39,7 @@ function getPullRequest(context) {
 }
 
 async function getConfig(context) {
-  return await context.config('auto_pr_labeler.yml');
+  return await context.config("auto_pr_labeler.yml");
 }
 
 module.exports = probotPlugin;

@@ -1,0 +1,54 @@
+# Regex for checking whether a PR is still work-in-progress (WIP).
+wipRegex: "/^\s*(\[WIP\]\s*|WIP:\s*|WIP\s+)+\s*/i"
+
+# Configuration for labels, set ignore to true to skip adding label
+labels:
+  wip:
+    name: "WIP"
+    color: "#FBCA04"
+    description: "Still work-in-progress, please don't review and don't merge"
+    ignore: false
+  unreviewed: 
+    name: "Unreviewed"
+    color: "#334796"
+    description: "Pull Request is not reviewed yet"
+    ignore: false
+  approved: 
+    name: "Approved"
+    color: "#0E8A16"
+    description: "Pull Request has been approved and can be merged"
+    ignore: false
+  changesRequested:
+    name: "Changes requested"
+    color: "#AA2626"
+    description: "Pull Request needs changes before it can be reviewed again"
+    ignore: false
+  merged: 
+    name: "Merged"
+    color: "#6F42C1"
+    description: "Pull Request has been merged successfully"
+    ignore: false
+
+# Set to true to add labels for assignees to pull requests
+addAssignees: true
+
+# A list of assignees whose names should be added as tags to PRs:
+#
+# user: GitHub username
+#   name: Title of label
+#   color: Color of label
+reviewers:
+  userA:
+    name: "User A"
+    color: "#000000"
+      
+# Custom rules that apply labels if certain conditions are met
+# Available placeholders: {{title}} for title of PR, {{body}} for descriptions of PR {{reviewer}} for assigned reviewer
+#
+# - "{{condition}}:
+#     name: Title of label
+#     color: Color of label
+customRules:
+  "{{title}}.indexOf('[HOTFIX]') === 0":
+    name: "Hotfix"
+    color: "#F00000"

@@ -7,10 +7,7 @@
     "start": "DEBUG=probot* probot run ./index.js",
     "start:dev": "nodemon --exec \"npm start\""
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/orhan/auto-pr-labeler-bot.git"
-  },
+  "repository": "https://github.com/orhan/auto-pr-labeler-bot.git",
   "keywords": [
     "probot",
     "probot-app",
@@ -25,7 +22,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "dotenv": "^8.0.0",
-    "probot": "^9.2.10"
+    "probot": "^9.2.13"
   },
   "devDependencies": {
     "codecov": "^3.4.0",

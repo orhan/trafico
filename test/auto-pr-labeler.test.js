@@ -1,17 +1,17 @@
-const PRTriage = require("../lib/pr-triage");
+const AutoPRLabeler = require("../lib/auto-pr-labeler");
 const payload = require("./fixtures/payload");
 
-describe("PRTriage", () => {
-  const owner = "pr-triage";
+describe("Auto-PR-Labeler", () => {
+  const owner = "auto-pr-labeler";
   const repo = "app";
 
   /**
    * STATE
    */
   describe("STATE", () => {
-    expect(PRTriage.STATE).toMatchObject({
+    expect(AutoPRLabeler.STATE).toMatchObject({
       WIP: expect.any(String),
-      UNREVIED: expect.any(String),
+      UNREVIEWED: expect.any(String),
       APPROVED: expect.any(String),
       CHANGES_REQUESTED: expect.any(String),
       MERGED: expect.any(String)
@@ -22,7 +22,7 @@ describe("PRTriage", () => {
    * GH_REVIEW_STATE
    */
   describe("GH REVIEW STATE", () => {
-    expect(PRTriage.GH_REVIEW_STATE).toEqual({
+    expect(AutoPRLabeler.GH_REVIEW_STATE).toEqual({
       APPROVED: "APPROVED",
       CHANGES_REQUESTED: "CHANGES_REQUESTED"
     });
@@ -33,25 +33,25 @@ describe("PRTriage", () => {
    */
   describe("_getState", () => {
     describe("when pull request title include WIP regex", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = () => klass._getState();
 
       test("should be STATE.WIP", async () => {
         klass.pullRequest =
           payload["pull_request"]["with"]["wip_title"]["data"];
         const result = await subject();
-        expect(result).toEqual(PRTriage.STATE.WIP);
+        expect(result).toEqual(AutoPRLabeler.STATE.WIP);
       });
     });
 
     describe("when pull request merged", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = () => klass._getState();
 
       test("should be STATE.MERGED", async () => {
         klass.pullRequest = payload["pull_request"]["with"]["merged"]["data"];
         const result = await subject();
-        expect(result).toEqual(PRTriage.STATE.MERGED);
+        expect(result).toEqual(AutoPRLabeler.STATE.MERGED);
       });
     });
 
@@ -61,14 +61,14 @@ describe("PRTriage", () => {
           listReviews: jest.fn().mockReturnValue(Promise.resolve({}))
         }
       };
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = () => klass._getState();
 
       test("should be STATE.UNREVIED", async () => {
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
         const result = await subject();
-        expect(result).toEqual(PRTriage.STATE.UNREVIED);
+        expect(result).toEqual(AutoPRLabeler.STATE.UNREVIED);
       });
     });
 
@@ -84,14 +84,14 @@ describe("PRTriage", () => {
             )
         }
       };
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = () => klass._getState();
 
       test("should be STATE.CHANGES_REQUESTED", async () => {
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
         const result = await subject();
-        expect(result).toEqual(PRTriage.STATE.CHANGES_REQUESTED);
+        expect(result).toEqual(AutoPRLabeler.STATE.CHANGES_REQUESTED);
       });
     });
 
@@ -105,14 +105,14 @@ describe("PRTriage", () => {
             )
         }
       };
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = () => klass._getState();
 
       test("should be STATE.APPROVE", async () => {
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
         const result = await subject();
-        expect(result).toEqual(PRTriage.STATE.APPROVED);
+        expect(result).toEqual(AutoPRLabeler.STATE.APPROVED);
       });
     });
   }); // _getState
@@ -132,7 +132,7 @@ describe("PRTriage", () => {
               )
           }
         };
-        const klass = new PRTriage(github, { owner, repo });
+        const klass = new AutoPRLabeler(github, { owner, repo });
         const subject = () => klass._getUniqueReviews();
         const desiredObj = [
           { state: "CHANGES_REQUESTED", submitted_at: "2018-01-06T08:28:10Z" },
@@ -157,7 +157,7 @@ describe("PRTriage", () => {
               )
           }
         };
-        const klass = new PRTriage(github, { owner, repo });
+        const klass = new AutoPRLabeler(github, { owner, repo });
         const subject = () => klass._getUniqueReviews();
         const desiredObj = [
           { state: "APPROVED", submitted_at: "2018-01-06T08:28:10Z" }
@@ -181,7 +181,7 @@ describe("PRTriage", () => {
               )
           }
         };
-        const klass = new PRTriage(github, { owner, repo });
+        const klass = new AutoPRLabeler(github, { owner, repo });
         const subject = () => klass._getUniqueReviews();
         const desiredObj = [
           { state: "APPROVED", submitted_at: "2020-07-24T00:00:00Z" }
@@ -202,7 +202,7 @@ describe("PRTriage", () => {
           listReviews: jest.fn().mockReturnValue(Promise.resolve({}))
         }
       };
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = () => klass._getUniqueReviews();
 
       test("should be empty Object", async () => {
@@ -218,7 +218,7 @@ describe("PRTriage", () => {
    * _ensurePRTriageLabelExists
    */
   describe("_ensurePRTriageLabelExists", () => {
-    const klass = new PRTriage({}, { owner, repo });
+    const klass = new AutoPRLabeler({}, { owner, repo });
     klass._createLabel = jest.fn().mockReturnValue(Promise.resolve({}));
     const n = 4;
 
@@ -241,13 +241,13 @@ describe("PRTriage", () => {
         }
       };
 
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = argument => klass._createLabel(argument);
 
       test("createLabel() should NOT be called", async () => {
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
-        await subject(PRTriage.STATE.UNREVIED);
+        await subject(AutoPRLabeler.STATE.UNREVIED);
         expect(github.issues.createLabel).not.toHaveBeenCalled();
       });
     });
@@ -260,11 +260,11 @@ describe("PRTriage", () => {
           createLabel: jest.fn().mockReturnValue(Promise.resolve({}))
         }
       };
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = argument => klass._createLabel(argument);
 
       test("hoge", async () => {
-        await subject(PRTriage.STATE.UNREVIED);
+        await subject(AutoPRLabeler.STATE.UNREVIED);
         expect(github.issues.createLabel).toHaveBeenCalled();
       });
     });
@@ -282,24 +282,24 @@ describe("PRTriage", () => {
     };
 
     describe("when key exists", () => {
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = argument => klass._addLabel(argument);
 
       test("addLabels() should not be called", async () => {
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
-        await subject(PRTriage.STATE.UNREVIED);
+        await subject(AutoPRLabeler.STATE.UNREVIED);
         expect(github.issues.addLabels).not.toHaveBeenCalled();
       });
     });
 
     describe("when key does NOT exist", () => {
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = argument => klass._addLabel(argument);
 
       test("addLabels() should be called", async () => {
         klass.pullRequest.labels = [];
-        await subject(PRTriage.STATE.UNREVIED);
+        await subject(AutoPRLabeler.STATE.UNREVIED);
         expect(github.issues.addLabels).toHaveBeenCalled();
       });
     });
@@ -316,12 +316,12 @@ describe("PRTriage", () => {
           removeLabel: jest.fn().mockReturnValue(Promise.resolve({}))
         }
       };
-      const klass = new PRTriage(github, { owner, repo });
+      const klass = new AutoPRLabeler(github, { owner, repo });
       const subject = argument => klass._removeLabel(argument);
 
       test("should NOT call removeLabel() ", async () => {
         klass.pullRequest.labels = [];
-        await subject(PRTriage.STATE.UNREVIED);
+        await subject(AutoPRLabeler.STATE.UNREVIED);
         expect(github.issues.removeLabel).not.toHaveBeenCalled();
       });
     });
@@ -334,13 +334,13 @@ describe("PRTriage", () => {
             removeLabel: jest.fn().mockReturnValue(Promise.resolve({}))
           }
         };
-        const klass = new PRTriage(github, { owner, repo });
+        const klass = new AutoPRLabeler(github, { owner, repo });
         const subject = argument => klass._removeLabel(argument);
 
         test("should call removeLabel()", async () => {
           klass.pullRequest =
             payload["pull_request"]["with"]["unreviewed_label"]["data"];
-          await subject(PRTriage.STATE.UNREVIED);
+          await subject(AutoPRLabeler.STATE.UNREVIED);
           expect(github.issues.removeLabel).toHaveBeenCalled();
         });
       });
@@ -357,13 +357,13 @@ describe("PRTriage", () => {
             )
           }
         };
-        const klass = new PRTriage(github, { owner, repo });
+        const klass = new AutoPRLabeler(github, { owner, repo });
         const subject = argument => klass._removeLabel(argument);
         test("shoud throw an error", async () => {
           klass.pullRequest =
             payload["pull_request"]["with"]["unreviewed_label"]["data"];
 
-          await expect(subject(PRTriage.STATE.UNREVIED)).rejects.toEqual({
+          await expect(subject(AutoPRLabeler.STATE.UNREVIED)).rejects.toEqual({
             code: statusCode
           });
         });
@@ -377,7 +377,7 @@ describe("PRTriage", () => {
   describe("_updateLabel", () => {
     describe("when currentLabelKey exists", () => {
       describe("and argument is PRTriage.STATE.WIP", () => {
-        const klass = new PRTriage({}, { owner, repo });
+        const klass = new AutoPRLabeler({}, { owner, repo });
         const subject = argument => klass._updateLabel(argument);
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
@@ -385,18 +385,18 @@ describe("PRTriage", () => {
         klass._removeLabel = jest.fn().mockReturnValue(Promise.resolve({}));
 
         test("should call _addLabel() ", async () => {
-          await subject(PRTriage.STATE.WIP);
+          await subject(AutoPRLabeler.STATE.WIP);
           expect(klass._addLabel).not.toHaveBeenCalled();
         });
 
         test("should call _removeLabel()", async () => {
-          await subject(PRTriage.STATE.WIP);
+          await subject(AutoPRLabeler.STATE.WIP);
           expect(klass._removeLabel).toHaveBeenCalled();
         });
       });
 
       describe("and argument and current are different", () => {
-        const klass = new PRTriage({}, { owner, repo });
+        const klass = new AutoPRLabeler({}, { owner, repo });
         const subject = argument => klass._updateLabel(argument);
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
@@ -404,18 +404,18 @@ describe("PRTriage", () => {
         klass._removeLabel = jest.fn().mockReturnValue(Promise.resolve({}));
 
         test("should call _addLabel() ", async () => {
-          await subject(PRTriage.STATE.APPROVE);
+          await subject(AutoPRLabeler.STATE.APPROVE);
           expect(klass._addLabel).toHaveBeenCalled();
         });
 
         test("should call _removeLabel()", async () => {
-          await subject(PRTriage.STATE.APPROVE);
+          await subject(AutoPRLabeler.STATE.APPROVE);
           expect(klass._removeLabel).toHaveBeenCalled();
         });
       });
 
       describe("and argument and current are same", () => {
-        const klass = new PRTriage({}, { owner, repo });
+        const klass = new AutoPRLabeler({}, { owner, repo });
         const subject = argument => klass._updateLabel(argument);
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
@@ -423,25 +423,25 @@ describe("PRTriage", () => {
         klass._removeLabel = jest.fn().mockReturnValue(Promise.resolve({}));
 
         test("should not call _addLabel() ", async () => {
-          await subject(PRTriage.STATE.UNREVIED);
+          await subject(AutoPRLabeler.STATE.UNREVIED);
           expect(klass._addLabel).not.toHaveBeenCalled();
         });
 
         test("should not call _removeLabel()", async () => {
-          await subject(PRTriage.STATE.UNREVIED);
+          await subject(AutoPRLabeler.STATE.UNREVIED);
           expect(klass._removeLabel).not.toHaveBeenCalled();
         });
       });
     });
 
     describe("when currentLabelKey does NOT exist", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = argument => klass._updateLabel(argument);
 
       test("should call _addLabel()", async () => {
         klass.pullRequest.labels = [];
         klass._addLabel = jest.fn().mockReturnValue(Promise.resolve({}));
-        await subject(PRTriage.STATE.UNREVIED);
+        await subject(AutoPRLabeler.STATE.UNREVIED);
         expect(klass._addLabel).toHaveBeenCalled();
       });
     });
@@ -452,21 +452,21 @@ describe("PRTriage", () => {
    */
   describe("_getLabel", () => {
     describe("when key exists", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = argument => klass._getLabel(argument);
       const desiredObj = { color: "fbca04", name: "PR: unreviewed" };
 
       test("should be a label object", async () => {
         klass.pullRequest =
           payload["pull_request"]["with"]["unreviewed_label"]["data"];
-        await expect(subject(PRTriage.STATE.UNREVIED)).resolves.toEqual(
+        await expect(subject(AutoPRLabeler.STATE.UNREVIED)).resolves.toEqual(
           desiredObj
         );
       });
     });
 
     describe("when key does NOT exist", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = argument => klass._getLabel(argument);
 
       test('should be new Error("Not found")', async () => {
@@ -480,9 +480,9 @@ describe("PRTriage", () => {
    * _getCurrentLabelKey
    */
   describe("_getCurrentLabelKey", () => {
-    const klass = new PRTriage({}, { owner, repo });
+    const klass = new AutoPRLabeler({}, { owner, repo });
     const subject = () => klass._getCurrentLabelKey();
-    const desiredStr = PRTriage.STATE.UNREVIED;
+    const desiredStr = AutoPRLabeler.STATE.UNREVIED;
 
     test(`should be ${desiredStr}`, () => {
       klass.pullRequest =
@@ -496,7 +496,7 @@ describe("PRTriage", () => {
    */
   describe("_getFilteredConfigObjByRegex", () => {
     describe("when pattern matches", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = argument => klass._getFilteredConfigObjByRegex(argument);
 
       test("should be filtered Object", () => {
@@ -509,7 +509,7 @@ describe("PRTriage", () => {
     });
 
     describe("when no pattern matches", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = argument => klass._getFilteredConfigObjByRegex(argument);
 
       test("should be empty Object", () => {
@@ -523,21 +523,21 @@ describe("PRTriage", () => {
    */
   describe("_getConfigObj", () => {
     describe("when key exists", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = argument => klass._getConfigObj(argument);
       const desiredObj = { color: "fbca04", name: "PR: unreviewed" };
 
       test("should be desiredObj", () => {
-        expect(subject(PRTriage.STATE.UNREVIED)).toEqual(desiredObj);
+        expect(subject(AutoPRLabeler.STATE.UNREVIED)).toEqual(desiredObj);
       });
 
       test("should NOT be undefined", () => {
-        expect(subject(PRTriage.STATE.UNREVIED)).not.toBeUndefined();
+        expect(subject(AutoPRLabeler.STATE.UNREVIED)).not.toBeUndefined();
       });
     });
 
     describe("when key does NOT exist", () => {
-      const klass = new PRTriage({}, { owner, repo });
+      const klass = new AutoPRLabeler({}, { owner, repo });
       const subject = argument => klass._getConfigObj(argument);
 
       test("should be undefined", () => {
