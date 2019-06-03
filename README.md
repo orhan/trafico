@@ -1,14 +1,14 @@
 <p align="center">
   <img src="/public/assets/trafico.svg" width="160" alt="Trafico's logo, a traffic police officer" />
-  <h1 align="center">Trafico</h1>
-  <h3 align="center">A PR Labeler Bot</h3>
+  <h3 align="center">Trafico</h3>
+  <h4 align="center">A PR Labeler Bot</h4>
 </p>
 
-<h4 align="center">
+<h5 align="center">
   GitHub App built with <a href="https://github.com/probot/probot">Probot</a> that adds appropriate labels depending on a Pull Request's status.
-</h4>
+</h5>
 
----
+<h1></h1>
 
 ## Installation
 
