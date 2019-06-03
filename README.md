@@ -1,16 +1,15 @@
+# Trafico – PR Labeler Bot
 
-# Auto-PR-Labeler Bot
-
-> GitHub App built with [Probot](https://github.com/probot/probot) that adds appropriate labels depending on the PR's status.
+> GitHub App built with [Probot](https://github.com/probot/probot) that adds appropriate labels depending on a Pull Request's status.
 
 ## Installation
 
 Please follow the below steps to install quickly :rocket::
 
-1. Go to [Auto-PR-Labeler-Bot App top page](https://probot.github.io/apps/auto-pr-labeler-bot/).
+1. Go to the [Trafico Github App page](https://probot.github.io/apps/trafico/).
 2. Click **"+ Add to GitHub"** button.
 3. Choose a repository.
-4. Create `.github/auto_pr_labeler.yml` file with your settings (see `.github/auto_pr_labeler.sample.yml` for available settings).
+4. Create `.github/trafico.yml` file with your settings (see `.github/trafico.sample.yml` for available settings).
 5. That's it :sparkles:.
 
 ## How it works
@@ -33,5 +32,5 @@ Please read [Contributing Guide](CONTRIBUTING.md) for details on our code of con
 
 ## License
 
-Auto-PR-Labeler-Bot © [Orhan Sönmez](https://twitter.com/orhnsnmz). Released under the [Apache 2.0](LICENSE)<br/>
+Trafico © [Orhan Sönmez](https://twitter.com/orhnsnmz). Released under the [Apache 2.0](LICENSE)<br/>
 Authored and maintained by [Orhan Sönmez](https://github.com/orhan).

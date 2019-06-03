@@ -1,6 +1,6 @@
-const debug = require("debug")("probot:auto-pr-labeler");
+const debug = require("debug")("probot:trafico");
 const Raven = require("raven");
-const AutoLabeler = require("./lib/auto-pr-labeler");
+const Trafico = require("./lib/trafico");
 
 Raven.config(
   process.env.NODE_ENV === "production" &&
@@ -18,20 +18,20 @@ function probotPlugin(robot) {
     "pull_request_review.dismissed"
   ];
 
-  robot.on(events, runAutoLabeler);
+  robot.on(events, runTrafico);
 }
 
-async function runAutoLabeler(context) {
-  const autoLabeler = forRepository(context);
+async function runTrafico(context) {
+  const trafico = forRepository(context);
   const pullRequest = getPullRequest(context);
   const config = await getConfig(context);
 
-  autoLabeler.runAutoLabeler(context, pullRequest, config);
+  trafico.runTrafico(context, pullRequest, config);
 }
 
 function forRepository(context) {
   const config = Object.assign({}, context.repo({ logger: debug }));
-  return new AutoLabeler(context.github, config);
+  return new Trafico(context.github, config);
 }
 
 function getPullRequest(context) {
@@ -39,7 +39,7 @@ function getPullRequest(context) {
 }
 
 async function getConfig(context) {
-  return await context.config("auto_pr_labeler.yml");
+  return await context.config("trafico.yml");
 }
 
 module.exports = probotPlugin;

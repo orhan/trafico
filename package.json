@@ -1,5 +1,5 @@
 {
-  "name": "auto-pr-labeler",
+  "name": "trafico",
   "version": "0.0.1",
   "description": "GitHub App built with Probot that automatically labels pull requests on certain conditions",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "DEBUG=probot* probot run ./index.js",
     "start:dev": "nodemon --exec \"npm start\""
   },
-  "repository": "https://github.com/orhan/auto-pr-labeler-bot.git",
+  "repository": "https://github.com/orhan/trafico.git",
   "keywords": [
     "probot",
     "probot-app",
