@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/public/assets/trafico.svg" width="160" alt="Trafico's logo, a trafic policer" /><
+  <img src="/public/assets/trafico.svg" width="160" alt="Trafico's logo, a traffic police officer" /><
 </p>
 
 # Trafico – PR Labeler Bot
