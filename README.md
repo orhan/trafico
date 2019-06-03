@@ -24,6 +24,8 @@ Please follow the below steps to install quickly :rocket::
 4. Create `.github/trafico.yml` file with your settings (see `.github/trafico.sample.yml` for available settings).
 5. That's it :sparkles:.
 
+<br/>
+
 ## How it works
 
 Only watches the most recent commit :eyes::.
@@ -34,13 +36,19 @@ Only watches the most recent commit :eyes::.
 - Adds a `Approved` label when the PR has been reviewed and got approved (as many times as the branch's protection setting dictates).
 - Adds a `Merged` label when the PR has been merged.
 
+<br/>
+
 ## Based on PRTriage Bot
 
 This bot is based heavily on the [PR-Triage Bot](https://probot.github.io/apps/pr-triage/) by [Sam Yamashita](https://twitter.com/sota0805), so check that one if this one does not fulfill your needs.
 
+<br/>
+
 ## Contributing
 
 Please read [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+<br/>
 
 ## License
 
