@@ -2,7 +2,6 @@
 addWipLabel: true
 
 # Regex for checking whether a PR is still work-in-progress (WIP).
-# Emojis are removed prior to checking regex.
 wipRegex: "/^\s*(\[WIP\]\s*|WIP:\s*|WIP\s+)+\s*/i"
 
 # Configuration for labels, set ignore to true to skip adding label
