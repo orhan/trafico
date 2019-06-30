@@ -1,54 +1,60 @@
+# Add WIP labels for PRs that are set to be work-in-progress, no other label will be added.
+addWipLabel: true
+
 # Regex for checking whether a PR is still work-in-progress (WIP).
+# Emojis are removed prior to checking regex.
 wipRegex: "/^\s*(\[WIP\]\s*|WIP:\s*|WIP\s+)+\s*/i"
 
 # Configuration for labels, set ignore to true to skip adding label
 labels:
   wip:
-    name: "WIP"
+    name: "🚧 WIP"
     color: "#FBCA04"
     description: "Still work-in-progress, please don't review and don't merge"
     ignore: false
   unreviewed: 
-    name: "Waiting for Review"
+    name: "🔍 Ready for Review"
     color: "#334796"
     description: "Pull Request is not reviewed yet"
     ignore: false
   approved: 
-    name: "Approved"
+    name: "✅ Approved"
     color: "#0E8A16"
     description: "Pull Request has been approved and can be merged"
     ignore: false
+  needsMoreApprovals: 
+    name: "🌟 Needs more Approvals"
+    color: "#96C823"
+    description: "Pull Request needs more approvals"
+    ignore: false
   changesRequested:
-    name: "Changes requested"
+    name: "⚠️ Changes requested"
     color: "#AA2626"
     description: "Pull Request needs changes before it can be reviewed again"
     ignore: false
   merged: 
-    name: "Merged"
+    name: "✨ Merged"
     color: "#6F42C1"
     description: "Pull Request has been merged successfully"
     ignore: false
 
-# Set to true to add labels for assignees to pull requests
-addAssignees: true
-
-# A list of assignees whose names should be added as tags to PRs:
+# A list of reviewers whose names should be added as tags to PRs, 
+# as long as their review is requested.
 #
 # user: GitHub username
 #   name: Title of label
 #   color: Color of label
-reviewers:
-  userA:
-    name: "User A"
-    color: "#000000"
+
+# Example
+# reviewers:
+#   userA:
+#     name: "User A"
+#     color: "#000000"
       
-# Custom rules that apply labels if certain conditions are met
-# Available placeholders: {{title}} for title of PR, {{body}} for descriptions of PR {{reviewer}} for assigned reviewer
+# Custom rules that apply labels if certain conditions are met.
+# Available placeholders: {{title}} for the title, {{body}} for the description of the PR 
+# and {{reviewer}} for assigned reviewers of the PR.
 #
 # - "{{condition}}:
 #     name: Title of label
 #     color: Color of label
-customRules:
-  "{{title}}.indexOf('[HOTFIX]') === 0":
-    name: "Hotfix"
-    color: "#F00000"
