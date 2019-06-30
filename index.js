@@ -15,6 +15,7 @@ function probotPlugin(robot) {
     "pull_request.synchronize",
     "pull_request.reopened",
     "pull_request.review_requested",
+    "pull_request.review_request_removed",
     "pull_request_review.edited",
     "pull_request_review.submitted",
     "pull_request_review.dismissed"
