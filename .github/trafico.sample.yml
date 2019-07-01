@@ -1,9 +1,6 @@
 # Add WIP labels for PRs that are set to be work-in-progress, no other label will be added.
 addWipLabel: true
 
-# Regex for checking whether a PR is still work-in-progress (WIP).
-wipRegex: "/^\s*(\[WIP\]\s*|WIP:\s*|WIP\s+)+\s*/i"
-
 # Configuration for labels, set ignore to true to skip adding label
 labels:
   wip:
@@ -49,11 +46,3 @@ labels:
 #   userA:
 #     name: "User A"
 #     color: "#000000"
-      
-# Custom rules that apply labels if certain conditions are met.
-# Available placeholders: {{title}} for the title, {{body}} for the description of the PR 
-# and {{reviewer}} for assigned reviewers of the PR.
-#
-# - "{{condition}}:
-#     name: Title of label
-#     color: Color of label
