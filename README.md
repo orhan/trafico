@@ -18,8 +18,8 @@
 
 Please follow the below steps to install quickly :rocket::
 
-1. Go to the [Trafico Github App page](https://probot.github.io/apps/trafico/).
-2. Click **"+ Add to GitHub"** button.
+1. Go to the [Trafico Github App page](https://github.com/marketplace/trafico-pull-request-labeler/).
+2. Click the **"Install it for free"** button down below.
 3. Choose a repository.
 4. Create `.github/trafico.yml` file with your settings (see `.github/trafico.sample.yml` for available settings).
 5. That's it :sparkles:.
