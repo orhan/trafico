@@ -9,8 +9,8 @@ labels:
     description: "Still work-in-progress, please don't review and don't merge"
     ignore: false
   unreviewed: 
-    name: "🔍 Ready for Review"
-    color: "#334796"
+    name: "🔍 Review Required"
+    color: "#0066ff"
     description: "Pull Request is not reviewed yet"
     ignore: false
   approved: 
